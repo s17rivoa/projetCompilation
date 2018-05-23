@@ -16,19 +16,19 @@ let compile file =
 
 
 type command = 
-    | PUSH | POP | SWAP | ADD | SUB | MUL | DIV | REM ;;
+    | PUSH of int | POP | SWAP | ADD | SUB | MUL | DIV | REM ;;
 
 (* question 2.5 *)
 
 let max_int = 10000000000 ;;
 
-let step command stack element = match command,stack with
+let step command stack = match command,stack with
     | POP, [] -> failwith "stack is empty"
     | POP, x::s -> s,x 
     | SWAP, [] -> [],max_int
     | SWAP, x::[] -> stack,max_int
     | SWAP, x1::x2::s -> x2::x1::s,max_int
-    | PUSH, s -> element::s, max_int
+    | PUSH(e), s -> e::s, max_int
     (* le reste est à coder *);;
 
 let rec print_list = function 
