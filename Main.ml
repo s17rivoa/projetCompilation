@@ -30,13 +30,18 @@ let step command stack = match command,stack with
     | SWAP, x1::x2::s -> x2::x1::s,max_int
     | PUSH(e), s -> e::s, max_int
     | ADD, x1::x2::s -> (x1+x2)::s, max_int
+    | ADD, _ -> failwith "stack too short"
     | SUB, x1::x2::s -> (x1-x2)::s, max_int
+    | SUB, _ -> failwith "stack too short"
     | MUL, x1::x2::s -> (x1*x2)::s, max_int
+    | MUL, _ -> failwith "stack too short"
     | DIV, x1::0::s -> failwith "math error"
-    | REM, x1::0::s -> failwith "math error"
     | DIV, x1::x2::s -> (x1/x2)::s, max_int
+    | DIV, _ -> failwith "stack too short"
+    | REM, x1::0::s -> failwith "math error"
     | REM, x1::x2::s -> (x1 mod x2)::s, max_int
-    (* le reste est à coder *);;
+    | REM, _ -> failwith "stack too short";;
+
 
 let rec print_list = function 
 [] -> ()
