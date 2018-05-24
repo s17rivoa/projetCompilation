@@ -29,14 +29,20 @@ let step command stack = match command,stack with
     | SWAP, x::[] -> stack,max_int
     | SWAP, x1::x2::s -> x2::x1::s,max_int
     | PUSH(e), s -> e::s, max_int
+    | ADD, x1::x2::s -> (x1+x2)::s, max_int
+    | SUB, x1::x2::s -> (x1-x2)::s, max_int
+    | MUL, x1::x2::s -> (x1*x2)::s, max_int
+    | DIV, x1::0::s -> failwith "math error"
+    | REM, x1::0::s -> failwith "math error"
+    | DIV, x1::x2::s -> (x1/x2)::s, max_int
+    | REM, x1::x2::s -> (x1 mod x2)::s, max_int
     (* le reste est à coder *);;
 
 let rec print_list = function 
 [] -> ()
 | e::l -> print_int e ; print_string " " ; print_list l ;;
 
-
-
-let stack = [];;
-let liste,x = step POP stack in
-print_int x ;;
+(*Test*)
+let st = 10::0::3::74::[];; (*stack initielle*)
+let res_list, l = (step ADD st);;
+print_char '\n'; print_list res_list ; print_char '\n'; print_char '\n';;
